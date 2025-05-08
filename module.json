@@ -1,1 +1,10 @@
-
+{
+  "id": "mobivtt",
+  "title": "MobiVTT",
+  "version": "0.1.1",
+  "esmodules": ["index.js"],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "13"
+  }
+}
