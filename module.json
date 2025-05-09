@@ -1,10 +1,24 @@
 {
   "id": "mobivtt",
   "title": "MobiVTT",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "manifest": "https://github.com/mobivtt/mobivtt-addon/releases/latest/download/module.json"
-  "download": "https://github.com/mobivtt/mobivtt-addon/releases/download/0.1.1/module.zip",
+  "download": "https://github.com/mobivtt/mobivtt-addon/releases/download/0.1.2/module.zip",
   "esmodules": ["index.js"],
+  "readme": "https://github.com/mobivtt/mobivtt-addon",
+  "license": "https://github.com/mobivtt/mobivtt-addon".
+  "authors": [
+    {
+      "id": "m-michalis",
+      "email": "support@mobivtt.com",
+      "url": "https://mobivtt.com"
+    },
+    {
+      "id": "tzalistar",
+      "email": "support@mobivtt.com",
+      "url": "https://mobivtt.com"
+    }
+  ]
   "compatibility": {
     "minimum": "11",
     "verified": "13"
