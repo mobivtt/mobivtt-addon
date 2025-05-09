@@ -1,10 +1,12 @@
 {
   "id": "mobivtt",
   "title": "MobiVTT",
-  "version": "",
+  "version": "0.1.5",
   "manifest": "https://github.com/mobivtt/mobivtt-addon/releases/latest/download/module.json",
-  "download": "",
-  "esmodules": ["index.js"],
+  "download": "https://github.com/mobivtt/mobivtt-addon/releases/download/0.1.5/module.zip",
+  "esmodules": [
+    "index.js"
+  ],
   "readme": "https://github.com/mobivtt/mobivtt-addon",
   "license": "ISC",
   "authors": [
