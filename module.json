@@ -6,7 +6,7 @@
   "download": "https://github.com/mobivtt/mobivtt-addon/releases/download/0.1.2/module.zip",
   "esmodules": ["index.js"],
   "readme": "https://github.com/mobivtt/mobivtt-addon",
-  "license": "https://github.com/mobivtt/mobivtt-addon".
+  "license": "https://github.com/mobivtt/mobivtt-addon",
   "authors": [
     {
       "id": "m-michalis",
