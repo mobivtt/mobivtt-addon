@@ -1,0 +1,23 @@
+{
+  "name": "mobivtt",
+  "version": "0.1.11",
+  "description": "",
+  "scripts": {
+    "dev": "npx vite build --mode=development --watch",
+    "build": "npx vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "module": "es2022",
+  "devDependencies": {
+    "@league-of-foundry-developers/foundry-vtt-dnd5e-types": "^1.5.2-2",
+    "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#main",
+    "@types/jquery": "^3.5.14",
+    "vite": "^6.3.2"
+  },
+  "dependencies": {
+    "cron": "^4.3.0",
+    "crypto-js": "^4.2.0"
+  }
+}

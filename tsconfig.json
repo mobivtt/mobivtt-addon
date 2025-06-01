@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "types": ["fvtt-types","@league-of-foundry-developers/foundry-vtt-dnd5e-types"],
+    "moduleResolution": "bundler",
+    "module": "ES2022",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true
+  },
+}
