@@ -7,16 +7,16 @@ export const sheetInject = ()=>{
         }
         actorSheet.options.actions['mobivttEnableSync'] = () => {
             ui.notifications?.info(`Character will be synced to MobiVTT.`);
-            actorSheet.object.update({['flags.mobivtt.sync']: true})
-            copyUrlAction(actorSheet.object)
+            actorSheet.actor.update({['flags.mobivtt.sync']: true})
+            copyUrlAction(actorSheet.actor)
         }
         actorSheet.options.actions['mobivttDisableSync'] = () => {
-            actorSheet.object.update({['flags.mobivtt.sync']: false})
+            actorSheet.actor.update({['flags.mobivtt.sync']: false})
             ui.notifications?.info(`Character will not be updated to MobiVTT.`);
         }
 
 
-        if (actorSheet.object.getFlag("mobivtt", "sync")) {
+        if (actorSheet.actor.getFlag("mobivtt", "sync")) {
             buttons.unshift({
                 icon: "fa-solid fa-mobile",
                 label: "Copy Character Sheet Mobile Page",
