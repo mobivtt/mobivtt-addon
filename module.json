@@ -22,7 +22,14 @@
       "id": "tzalistar",
       "name": "tzalistar",
       "email": "support@mobivtt.com",
+      "discord": "PigeonOfHell#6624",
       "url": "https://mobivtt.com"
+    }
+  ],
+  "media": [
+    {
+      "type": "setup",
+      "url": "modules/mobivtt/media/thumb.webp"
     }
   ],
   "compatibility": {
