@@ -1,6 +1,6 @@
 {
   "name": "mobivtt",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "",
   "scripts": {
     "dev": "npx vite build --mode=development --watch",
