@@ -1,4 +1,4 @@
-import {copyUrlAction} from "../../settings";
+import {copyUrlAction} from "../../../settings";
 
 export const sheetInject = ()=>{
     Hooks.on("getHeaderControlsPrimarySheet5e", function (actorSheet: CharacterActorSheet, buttons) {

@@ -1,5 +1,6 @@
 import {CronJob} from "cron";
 import {getUrl} from "./settings";
+import {SystemAdapter} from "./systems/base/SystemAdapter";
 
 class ThrottledErrorNotifier {
     private lastShown = 0;
@@ -20,30 +21,28 @@ class ThrottledErrorNotifier {
 
 const notifier = new ThrottledErrorNotifier(7000); // one message per 10sec
 
+let systemAdapter: SystemAdapter | null = null;
 
-const actorToJSON = (actor: Actor5e) => {
-    const system = {}
-
-    Object.keys(actor.system).map(key => {
-        // @ts-ignore
-        system[key] = actor.system[key]
-    })
-
-    return {name: actor.name, system, items: actor.items};
-}
-
-const sendActor = (character: Actor5e, action = 'update') => {
-    // @ts-ignore
-    if (character.type !== 'character'){
-        console.log('[MobiVTT] Skipping ' + character.name+'. Reason: Not a character');
+export const sendActor = (actor: Actor, action = 'update') => {
+    if (!systemAdapter) {
+        console.error('[MobiVTT] No system adapter available');
         return;
     }
-    if (!character.getFlag("mobivtt", "sync")) {
-        console.log('[MobiVTT] Skipping ' + character.name+'. Reason: Not enabled');
-        action = 'delete'
+
+    // Check if actor should be synced
+    if (!systemAdapter.shouldSync(actor)) {
+        console.log(`[MobiVTT] Skipping ${actor.name}. Reason: Not enabled`);
+        action = 'delete';
     }
 
-    const actorObject = action === 'delete' ? false : actorToJSON(character);
+    // Serialize actor data
+    const actorObject = action === 'delete' ? false : systemAdapter.serializeActor(actor);
+
+    // Skip if serialization returns null (e.g., wrong actor type)
+    if (actorObject === null && action !== 'delete') {
+        return;
+    }
+
     fetch(getUrl('api/foundryvtt/update'), {
         method: 'POST',
         headers: {
@@ -52,7 +51,7 @@ const sendActor = (character: Actor5e, action = 'update') => {
         body: JSON.stringify({
             access_code: game.settings.get('mobivtt', 'license_key'),
             world_id: game.world.id,
-            character_id: character.id,
+            character_id: actor.id,
             state: actorObject
         })
     })
@@ -63,26 +62,32 @@ const sendActor = (character: Actor5e, action = 'update') => {
             }
         })
 }
+
 const syncAllChars = () => {
     // @ts-ignore
-    game.actors?.contents.map(sendActor)
+    game.actors?.contents.forEach(sendActor);
 }
-export const startSync = () => {
-    Hooks.on('updateActor', (actor: Actor5e, changes, status) => {
+
+export const startSync = (adapter: SystemAdapter) => {
+    systemAdapter = adapter;
+
+    Hooks.on('updateActor', (actor: Actor, changes, status) => {
         if (!status.diff) {
             return;
         }
-        sendActor(actor)
-    });
-    Hooks.on('deleteActor', (actor: Actor5e, changes, status) => {
-        sendActor(actor, 'delete')
+        sendActor(actor);
     });
 
-    syncAllChars()
+    Hooks.on('deleteActor', (actor: Actor, changes, status) => {
+        sendActor(actor, 'delete');
+    });
+
+    syncAllChars();
+
     new CronJob('*/50 * * * * *', () => {
-            syncAllChars()
+            syncAllChars();
         },
         null,
         true
-    )
+    );
 }

@@ -1,4 +1,4 @@
-import {copyUrlAction} from "../../settings";
+import {copyUrlAction} from "../../../settings";
 
 
 export const sheetInject = () => {
