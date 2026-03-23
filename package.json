@@ -1,6 +1,6 @@
 {
   "name": "mobivtt",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MobiVTT - Mobile character sheets for FoundryVTT",
   "scripts": {
     "mobivttaddon:dev": "npx vite build --mode=development --watch",

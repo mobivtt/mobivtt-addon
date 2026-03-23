@@ -1,7 +1,10 @@
 import {copyUrlAction} from "../../../settings";
 
 export const sheetInject = ()=>{
-    Hooks.on("getHeaderControlsPrimarySheet5e", function (actorSheet: CharacterActorSheet, buttons) {
+    Hooks.on("getHeaderControlsActorSheetV2", function (actorSheet: CharacterActorSheet, buttons) {
+        if(!actorSheet.actor.type || actorSheet.actor.type !== 'character'){
+            return;
+        }
         actorSheet.options.actions['mobivttCopySheetUrl'] = () => {
             copyUrlAction(actorSheet.actor)
         }

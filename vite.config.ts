@@ -18,7 +18,7 @@ function copyToFoundryDirectories(directories: string[]): Plugin {
 
                 // Create a target directory if it doesn't exist
                 if (!fs.existsSync(targetDir)) {
-                    fs.mkdirSync(targetDir, { recursive: true });
+                    fs.mkdirSync(targetDir, {recursive: true});
                 }
 
                 // Copy all files from dist to target
@@ -42,12 +42,13 @@ export default defineConfig(({mode}) => {
     const env = loadEnv(mode, process.cwd(), '')
 
     // Determine output directories
-    const foundryDirs = [];
-    if (env.FOUNDRYVTT12_MODULE_DIR) {
-        foundryDirs.push(env.FOUNDRYVTT12_MODULE_DIR);
-    }
-    if (env.FOUNDRYVTT13_MODULE_DIR) {
-        foundryDirs.push(env.FOUNDRYVTT13_MODULE_DIR);
+    const foundryDirs: string[] = [];
+    if (env.FOUNDRYVTT_VERSIONS) {
+        env.FOUNDRYVTT_VERSIONS.split(',')
+            .map(version => version.replace('.', '-'))
+            .map(version => foundryDirs.push(`../dev-tools/foundry-app/data${version}/Data/modules/mobivtt`))
+
+
     }
 
     const plugins = [
@@ -76,10 +77,10 @@ export default defineConfig(({mode}) => {
                 formats: ['es'],
                 fileName: 'mobivtt'
             },
-            rollupOptions:{
-                output:{
+            rollupOptions: {
+                output: {
                     sourcemapPathTransform: (relativeSourcePath) => {
-                        return relativeSourcePath.replace('../../../../../src','mobivtt-addon').replace('../../../../../node_modules','node_modules')
+                        return relativeSourcePath.replace('../../../../../src', 'mobivtt-addon').replace('../../../../../node_modules', 'node_modules')
                     }
                 }
             }
