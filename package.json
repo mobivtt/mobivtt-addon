@@ -1,21 +1,30 @@
 {
   "name": "mobivtt",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "MobiVTT - Mobile character sheets for FoundryVTT",
   "scripts": {
     "mobivttaddon:dev": "npx vite build --mode=development --watch",
-    "mobivttaddon:build": "npx vite build"
+    "mobivttaddon:build": "npx vite build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
-  "keywords": ["foundryvtt", "module", "dnd5e", "mobile"],
+  "keywords": [
+    "foundryvtt",
+    "module",
+    "dnd5e",
+    "mobile"
+  ],
   "author": "",
   "license": "ISC",
   "module": "es2022",
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-dnd5e-types": "^1.5.2-2",
+    "@types/jquery": "^4.0.1",
+    "@types/node": "^26.1.1",
     "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#main",
-    "@types/jquery": "^3.5.14",
-    "@types/node": "^22.10.2",
-    "vite": "^6.3.2"
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
   },
   "dependencies": {
     "cron": "^4.3.0",

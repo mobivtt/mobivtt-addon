@@ -1,4 +1,4 @@
-import {copyUrlAction} from "../../../settings";
+import {copyUrlAction, isBlockedByCharacterLimit} from "../../../settings";
 
 
 export const sheetInject = () => {
@@ -16,7 +16,7 @@ export const sheetInject = () => {
             })
             buttons.unshift({
                 label: "Disable MobiVTT for this character",
-                class: "mobivtt-enable-sync",
+                class: "mobivtt-disable-sync",
                 icon: "fas fa-eye-slash",
                 onclick: () => {
                     actorSheet.object.update({['flags.mobivtt.sync']: false})
@@ -27,9 +27,10 @@ export const sheetInject = () => {
         } else {
             buttons.unshift({
                 label: "Enable MobiVTT for this character",
-                class: "mobivtt-disable-sync",
+                class: "mobivtt-enable-sync",
                 icon: "fas fa-mobile",
                 onclick: () => {
+                    if (isBlockedByCharacterLimit()) return;
                     ui.notifications?.info(`Character will be synced to MobiVTT.`);
                     actorSheet.object.update({['flags.mobivtt.sync']: true})
                     copyUrlAction(actorSheet.object)

@@ -1,4 +1,4 @@
-import {copyUrlAction} from "../../../settings";
+import {copyUrlAction, isBlockedByCharacterLimit} from "../../../settings";
 
 export const sheetInject = ()=>{
     Hooks.on("getHeaderControlsActorSheetV2", function (actorSheet: CharacterActorSheet, buttons) {
@@ -9,6 +9,7 @@ export const sheetInject = ()=>{
             copyUrlAction(actorSheet.actor)
         }
         actorSheet.options.actions['mobivttEnableSync'] = () => {
+            if (isBlockedByCharacterLimit()) return;
             ui.notifications?.info(`Character will be synced to MobiVTT.`);
             actorSheet.actor.update({['flags.mobivtt.sync']: true})
             copyUrlAction(actorSheet.actor)

@@ -35,7 +35,7 @@ export async function buildSrdRegistry(): Promise<void> {
     const ids = new Set<string>();
 
     for (const packId of SRD_PACKS) {
-        const pack = game.packs.get(packId);
+        const pack = (game as any).packs.get(packId);
         if (!pack) continue;
 
         const index = await pack.getIndex({ fields: ['system.identifier'] });

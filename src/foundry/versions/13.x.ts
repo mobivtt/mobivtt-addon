@@ -21,15 +21,6 @@ export const config = () => {
                         `)
                 licenseKeyElement.after(`
                             <div class="form-group">
-                                <label>Clear MobiVTT worlds/characters</label>
-                                <div class="form-fields">
-                                    <a href="${getUrl(`clearWorld/${game.settings.get('mobivtt', 'license_key')}`)}" target="_blank">Purge cloud data <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                                </div>
-                                <p class="hint">This action will purge cloud data for your license key so you can re-sync. Same access code can be used for multiple worlds, as long as only 1 world is active.</p>
-                            </div>
-                        `)
-                licenseKeyElement.after(`
-                            <div class="form-group">
                                 <label>Manage your license</label>
                                 <div class="form-fields">
                                     <a href="${getUrl('signin')}" target="_blank">Sign in <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
