@@ -1,6 +1,7 @@
 import {initSettings, validateLicense, type PlanInfo} from './settings'
 import {startSync} from './sync'
 import {editApplicator} from './mobile-sync'
+import {rollApplicator} from './mobile-roll'
 import {mobiWs} from './websocket'
 import {SystemRegistry} from './systems/registry'
 import {DnD5eAdapter} from './systems/dnd5e/DnD5eAdapter'
@@ -108,5 +109,9 @@ Hooks.once("ready", async function () {
                 msg.updates.map(u => u.id),
                 allApplied ? 'applied' : 'failed'
             );
+        });
+
+    mobiWs.onRollRequest(async (msg) => {
+            await rollApplicator.postRoll(msg.characterId, msg.roll);
         });
 });

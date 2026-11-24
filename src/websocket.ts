@@ -12,11 +12,20 @@ interface EditUpdate {
     value?: unknown;
 }
 
+// Website is the RNG authority: these are the exact die values the player saw.
+interface RollPayload {
+    dice: { type: string; value: number }[];
+    total: number;
+    modifier: number;
+    flavor?: string;
+}
+
 type WsMessage =
     | { type: 'character_update'; characterId: string; data: string /* gzip+base64 JSON */ }
     | { type: 'character_delete'; characterId: string }
     | { type: 'portrait_update'; characterId: string; portrait: string | null }
     | { type: 'edit_request'; characterId: string; updates: EditUpdate[] }
+    | { type: 'roll_request'; characterId: string; roll: RollPayload }
     | { type: 'edit_ack'; updateIds: string[]; status: 'applied' | 'failed' }
     | { type: 'session_metadata'; foundryVersion: string; systemVersion: string; moduleVersion: string; activeModules?: string[]; systemId?: string }
     | { type: 'session_info'; characters: unknown[]; connectedClients: number; foundryConnected: boolean; planType?: string }
@@ -34,6 +43,7 @@ class MobiVTTWebSocket {
     private heartbeatInterval: ReturnType<typeof setInterval> | null = null;
     private _connected = false;
     private editRequestCallback: ((msg: { characterId: string; updates: EditUpdate[] }) => void) | null = null;
+    private rollRequestCallback: ((msg: { characterId: string; roll: RollPayload }) => void) | null = null;
     private connectCallback: (() => void) | null = null;
     private rejected = false;
     private portraitSources = new Map<string, string | null>();
@@ -124,6 +134,8 @@ class MobiVTTWebSocket {
                 const msg = JSON.parse(event.data as string) as WsMessage;
                 if (msg.type === 'edit_request' && this.editRequestCallback) {
                     this.editRequestCallback(msg);
+                } else if (msg.type === 'roll_request' && this.rollRequestCallback) {
+                    this.rollRequestCallback(msg);
                 } else if (msg.type === 'character_reject') {
                     const actor = game.actors?.get(msg.characterId);
                     if (actor) actor.update({ 'flags.mobivtt.sync': false });
@@ -199,6 +211,10 @@ class MobiVTTWebSocket {
 
     onEditRequest(cb: (msg: { characterId: string; updates: EditUpdate[] }) => void): void {
         this.editRequestCallback = cb;
+    }
+
+    onRollRequest(cb: (msg: { characterId: string; roll: RollPayload }) => void): void {
+        this.rollRequestCallback = cb;
     }
 
     onConnect(cb: () => void): void {
